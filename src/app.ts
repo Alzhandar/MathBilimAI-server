@@ -7,8 +7,7 @@ import authRoutes from './routes/authRoutes';
 import aiRoutes from './routes/aiRoutes';
 
 const app = express();
-
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors());
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/ai', aiRoutes);
