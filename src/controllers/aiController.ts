@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import { generateTest, chatWithAI } from '../services/aiService';
 
 export const generateTestHandler = async (req: Request, res: Response) => {
-    const { topic, numQuestions } = req.body;
+    const { topic, difficulty } = req.body;
     try {
-        const testContent = await generateTest(topic, numQuestions);
+        const testContent = await generateTest(topic, difficulty);
         res.json({ testContent });
     } catch (error: any) {
         console.error('Error generating test:', error);
@@ -12,10 +12,11 @@ export const generateTestHandler = async (req: Request, res: Response) => {
     }
 };
 
+
 export const chatWithAIHandler = async (req: Request, res: Response) => {
-    const { question } = req.body;
+    const { messages } = req.body;
     try {
-        const answer = await chatWithAI(question);
+        const answer = await chatWithAI(messages);
         res.json({ answer });
     } catch (error: any) {
         console.error('Error processing request:', error);
@@ -33,8 +34,8 @@ export const submitTestHandler = async (req: Request, res: Response) => {
         }
     });
 
-    const recommendations = correctAnswers.map((_: any, index: number) => {
-        if (answers[index] !== correctAnswers[index]) {
+    const recommendations = correctAnswers.map((correctAnswer: string, index: number) => {
+        if (answers[index] !== correctAnswer) {
             return `Review topic related to question ${index + 1}`;
         }
         return null;
