@@ -18,7 +18,7 @@ const userSchema = new Schema<IUserDocument>({
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    telegramNick: { type: String, default: '' },
+
 });
 
 userSchema.pre<IUserDocument>('save', async function (next) {

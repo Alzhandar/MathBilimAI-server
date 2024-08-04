@@ -9,7 +9,8 @@ import materialRoutes from './routes/materialRoutes';
 import { setupSwagger } from './swagger';
 import telegramRoutes from './routes/telegramRoutes';
 // import chatRoutes from './routes/chatRoutes';
-
+import questionRoutes from './routes/questionRoutes'; 
+import testRoutes from './routes/testRoutes'; 
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -17,8 +18,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/materials', materialRoutes);
 app.use('/api/telegram', telegramRoutes);
+app.use('/api', testRoutes); 
 // app.use('/api', chatRoutes);
-
+app.use('/api', questionRoutes); 
 setupSwagger(app);
 mongoose.connect(process.env.MONGO_URI as string, {
 } as mongoose.ConnectOptions).then(() => {
