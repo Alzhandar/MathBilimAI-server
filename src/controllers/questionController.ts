@@ -57,3 +57,34 @@ export const deleteQuestionsByDifficulty = async (req: Request, res: Response) =
         res.status(500).json({ message: 'Ошибка при удалении вопросов', error });
     }
 };
+
+export const getTopics = async (req: Request, res: Response) => {
+    try {
+        const topics = await Question.distinct('topic');
+        res.status(200).json(topics);
+    } catch (error) {
+        res.status(500).json({ message: 'Ошибка при получении тем', error });
+    }
+};
+
+export const getQuestionsByTopic = async (req: Request, res: Response) => {
+    try {
+        const { topic } = req.query;
+        const questions = await Question.find({ topic });
+        res.status(200).json(questions);
+    } catch (error) {
+        console.error('Ошибка при получении вопросов:', error);
+        res.status(500).json({ message: 'Ошибка при получении вопросов', error });
+    }
+};
+
+export const deleteQuestionsByTopic = async (req: Request, res: Response) => {
+    try {
+        const { topic } = req.query;
+        await Question.deleteMany({ topic: topic as string });
+        res.status(200).json({ message: 'Все вопросы по теме успешно удалены' });
+    } catch (error) {
+        console.error('Ошибка при удалении вопросов по теме:', error);
+        res.status(500).json({ message: 'Ошибка при удалении вопросов по теме', error });
+    }
+};

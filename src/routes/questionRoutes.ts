@@ -1,5 +1,5 @@
 import express from 'express';
-import { addQuestion, getRandomQuestions, getQuestionsByDifficulty, deleteQuestion, deleteQuestionsByDifficulty } from '../controllers/questionController';
+import { addQuestion, getRandomQuestions, getQuestionsByDifficulty, deleteQuestion, deleteQuestionsByDifficulty, getTopics, getQuestionsByTopic, deleteQuestionsByTopic } from '../controllers/questionController';
 
 const router = express.Router();
 
@@ -127,5 +127,67 @@ router.delete('/questions/:id', deleteQuestion);
  *         description: Ошибка при удалении вопросов
  */
 router.delete('/questions', deleteQuestionsByDifficulty);
+
+/**
+ * @swagger
+ * /api/questions/topics:
+ *   get:
+ *     summary: Получение списка тем
+ *     tags: [Questions]
+ *     responses:
+ *       200:
+ *         description: Список тем
+ *       500:
+ *         description: Ошибка при получении тем
+ */
+router.get('/questions/topics', getTopics);
+
+/**
+ * @swagger
+ * /api/questions/topic:
+ *   get:
+ *     summary: Получение вопросов по теме
+ *     tags: [Questions]
+ *     parameters:
+ *       - in: query
+ *         name: topic
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Название темы
+ *       - in: query
+ *         name: count
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Количество вопросов
+ *     responses:
+ *       200:
+ *         description: Список вопросов по теме
+ *       500:
+ *         description: Ошибка при получении вопросов по теме
+ */
+router.get('/questions/topic', getQuestionsByTopic);
+
+/**
+ * @swagger
+ * /api/questions/topic:
+ *   delete:
+ *     summary: Удаление всех вопросов по теме
+ *     tags: [Questions]
+ *     parameters:
+ *       - in: query
+ *         name: topic
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Название темы
+ *     responses:
+ *       200:
+ *         description: Все вопросы по теме успешно удалены
+ *       500:
+ *         description: Ошибка при удалении вопросов по теме
+ */
+router.delete('/questions/topic', deleteQuestionsByTopic);
 
 export default router;
