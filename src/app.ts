@@ -12,8 +12,15 @@ import telegramRoutes from './routes/telegramRoutes';
 import questionRoutes from './routes/questionRoutes'; 
 import testRoutes from './routes/testRoutes'; 
 const app = express();
+
 app.use(cors());
+
 app.use(express.json());
+app.get('/', (req, res) => {
+    console.log('Привет');
+    res.send('Hello, world!');
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/materials', materialRoutes);
