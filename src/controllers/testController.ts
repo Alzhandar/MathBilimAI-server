@@ -47,7 +47,7 @@ export const submitTest = async (req: Request, res: Response) => {
 export const createCourse = async (req: Request, res: Response) => {
     try {
         const { topics } = req.body;
-        const response = await axios.post('http://127.0.0.1:8000/create_course', { topics });
+        const response = await axios.post('https://mathbilimai-vectordb-production-65a7.up.railway.app/create_course', { topics });
 
         const courseContent = response.data.course_content;
 
